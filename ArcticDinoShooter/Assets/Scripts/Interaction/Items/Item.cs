@@ -4,6 +4,7 @@ public class Item : MonoBehaviour, Iinteractable
 {
     [SerializeField] private string _id;
     [SerializeField] private float _throwForce;
+    [SerializeField] private ItemInfo _info;
 
     private Rigidbody _rigidbody;
 
@@ -67,5 +68,10 @@ public class Item : MonoBehaviour, Iinteractable
     public void InteractWith(Item item)
     {
         throw new System.NotImplementedException();
+    }
+
+    public ItemInfo GetInfo()
+    {
+        return _info;
     }
 }

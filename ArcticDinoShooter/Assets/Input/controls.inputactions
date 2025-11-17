@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "controls",
     "maps": [
         {
@@ -327,6 +328,54 @@
                     "processors": "",
                     "groups": "",
                     "action": "EquipItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "312fbf90-d9cc-42cb-a185-efbb397175ba",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "008f136a-5f04-4f93-b1d4-4a3b06a64fda",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "OpenCloseInventory",
+                    "type": "Button",
+                    "id": "c1176991-3780-4d67-9bfb-45778c004f3f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "aab35f1d-195e-4965-ad74-09261fd9ebea",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7d6b4b27-eef4-463a-a04a-9f8ee10bb7db",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenCloseInventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

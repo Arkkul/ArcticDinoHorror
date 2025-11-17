@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -9,10 +10,14 @@ public class Inventory : MonoBehaviour
     [SerializeField] private float _interactDistance;
 
     [SerializeField] private TMP_Text hint;
+    [SerializeField] private GameObject _inventoryUI;
+    private bool _isInventoryOpen = false;
 
     private GameObject _interactableObject;
 
     [SerializeField] private LayerMask _layerMask;
+
+    [SerializeField] private List<ItemInfo> _items;
 
     private void Awake()
     {
@@ -22,6 +27,25 @@ public class Inventory : MonoBehaviour
     private void Update()
     {
         FindItem();
+    }
+
+    public void OpenCloseInventory()
+    {
+        if (_isInventoryOpen)
+        {
+            _inventoryUI.SetActive(false);
+        }
+        else
+        {
+            _inventoryUI.SetActive(true);
+            _inventoryUI.GetComponent<InventoryUI>().ShowInventory();
+        }
+           
+    }
+
+    public List<ItemInfo> GetItemList()
+    {
+        return _items;
     }
 
     public void UseItem()
@@ -36,6 +60,7 @@ public class Inventory : MonoBehaviour
         {
             _currentItem = _interactableObject;
             _currentItem.GetComponent<Item>().Equip(transform);
+            _items.Add(_interactableObject.GetComponent<Item>().GetInfo());
             Debug.Log("взял");
         }
        
@@ -73,6 +98,7 @@ public class Inventory : MonoBehaviour
     {
         if (_currentItem != null)
         {
+            _items.Remove(_currentItem.GetComponent<Item>().GetInfo());
             _currentItem.GetComponent<Item>().Drop();
             _currentItem = null;
             Debug.Log(_currentItem);
@@ -83,6 +109,7 @@ public class Inventory : MonoBehaviour
     {
         if (_currentItem != null)
         {
+            _items.Remove(_currentItem.GetComponent<Item>().GetInfo());
             _currentItem.GetComponent<Item>().Trow();
             _currentItem = null;
         }
