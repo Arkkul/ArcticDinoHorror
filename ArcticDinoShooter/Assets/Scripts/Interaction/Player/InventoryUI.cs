@@ -12,11 +12,16 @@ public class InventoryUI : MonoBehaviour
     private void Start()
     {
         _inventory = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Inventory>();
-        ShowInventory();
+       // ShowInventory();
     }
 
     public void ShowInventory()
     {
+        foreach(InventorySlot slot in _inventoryPanel.GetComponentsInChildren<InventorySlot>())
+        {
+            print(slot.name);
+            Destroy(slot.gameObject);
+        }
         _items = _inventory.GetItemList();
         foreach (var item in _items)
         {
@@ -24,6 +29,7 @@ public class InventoryUI : MonoBehaviour
             print(item.name + "werf");
             _inventorySlot.SetImage(item.icon);
             _inventorySlot.SetName(item.name);
+            _inventorySlot.SetItemInfo(item);
         }
     }
 }

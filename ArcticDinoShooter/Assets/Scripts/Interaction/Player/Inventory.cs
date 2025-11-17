@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] private GameObject _currentItem;
+    [SerializeField] private GameObject _curentItem;
 
     [SerializeField] private Camera _playerCamera;
     [SerializeField] private float _interactDistance;
@@ -34,11 +34,13 @@ public class Inventory : MonoBehaviour
         if (_isInventoryOpen)
         {
             _inventoryUI.SetActive(false);
+            _isInventoryOpen = false;
         }
         else
         {
             _inventoryUI.SetActive(true);
-            _inventoryUI.GetComponent<InventoryUI>().ShowInventory();
+            _inventoryUI.GetComponentInChildren<InventoryUI>().ShowInventory();
+            _isInventoryOpen = true;
         }
            
     }
@@ -50,16 +52,30 @@ public class Inventory : MonoBehaviour
 
     public void UseItem()
     {
-        if (_currentItem != null)
-            _currentItem.GetComponent<Item>().Use();
+        if (_curentItem != null)
+            _curentItem.GetComponent<Item>().Use();
+    }
+
+    public void ChangeCurentItem(ItemInfo itemInfo)
+    {
+        Destroy(_curentItem);
+        _curentItem = Instantiate(itemInfo.prefab, transform);
+        _curentItem.transform.localPosition = Vector3.zero;
+        _curentItem.transform.localRotation = Quaternion.identity;
+
+       // _curentItem.GetComponent<Item>().Equip(transform);
     }
 
     public void TakeItem()
     {
-        if (_interactableObject != null && _currentItem == null)
+        if (_interactableObject != null)
         {
-            _currentItem = _interactableObject;
-            _currentItem.GetComponent<Item>().Equip(transform);
+            if(_curentItem != null)
+            {
+                Destroy( _curentItem );
+            }
+            _curentItem = _interactableObject;
+            _curentItem.GetComponent<Item>().Equip(transform);
             _items.Add(_interactableObject.GetComponent<Item>().GetInfo());
             Debug.Log("взял");
         }
@@ -96,30 +112,30 @@ public class Inventory : MonoBehaviour
 
     public void DropItem()
     {
-        if (_currentItem != null)
+        if (_curentItem != null)
         {
-            _items.Remove(_currentItem.GetComponent<Item>().GetInfo());
-            _currentItem.GetComponent<Item>().Drop();
-            _currentItem = null;
-            Debug.Log(_currentItem);
+            _items.Remove(_curentItem.GetComponent<Item>().GetInfo());
+            _curentItem.GetComponent<Item>().Drop();
+            _curentItem = null;
+            Debug.Log(_curentItem);
         }
     }
 
     public void ThrowItem()
     {
-        if (_currentItem != null)
+        if (_curentItem != null)
         {
-            _items.Remove(_currentItem.GetComponent<Item>().GetInfo());
-            _currentItem.GetComponent<Item>().Trow();
-            _currentItem = null;
+            _items.Remove(_curentItem.GetComponent<Item>().GetInfo());
+            _curentItem.GetComponent<Item>().Trow();
+            _curentItem = null;
         }
     }
 
     public bool HasCurrentItem(string itemId)
     {
-        if (_currentItem != null)
+        if (_curentItem != null)
         {
-            Item item = _currentItem.GetComponent<Item>();
+            Item item = _curentItem.GetComponent<Item>();
             return item != null && item.ID == itemId;
         }
         return false;
@@ -127,7 +143,7 @@ public class Inventory : MonoBehaviour
 
     public void DropCurrentItem()
     {
-        if (_currentItem != null)
+        if (_curentItem != null)
         {
             DropItem();
         }
