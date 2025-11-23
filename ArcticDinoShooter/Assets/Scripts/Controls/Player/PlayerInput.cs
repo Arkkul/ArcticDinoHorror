@@ -24,7 +24,13 @@ public class PlayerInput : MonoBehaviour
         _input.Player.Aim.canceled += Aim_canceled;
         _input.UI.Pause.performed += Pause_performed;
         _input.UI.OpenCloseInventory.performed += OpenCloseInventory_performed;
+        _input.Player.Jump.performed += Jump_performed;
         
+    }
+
+    private void Jump_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        _controllable.Jump();
     }
 
     private void Aim_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)

@@ -10,6 +10,7 @@ public class Character : MonoBehaviour, IControllable
 
     [SerializeField] private float _crouchHeight;
     [SerializeField] private float _crouchTime;
+    [SerializeField] private float _jumpHeight;
     
     private CharacterController _characterController;
     private InteractSystem _interactSystem;
@@ -36,12 +37,18 @@ public class Character : MonoBehaviour, IControllable
         GravityFall();
     }
 
+
     private void GravityFall()
     {
-        if (!_characterController.isGrounded)
+
+        velocity += Physics.gravity.y * Time.deltaTime;
+        _characterController.Move(Vector3.up * velocity * Time.fixedDeltaTime);
+
+        if (_characterController.isGrounded)
         {
-            _characterController.Move(Vector3.up * velocity * Time.deltaTime);
-            velocity += -10 * Time.deltaTime;
+         
+            velocity = 0;
+           // print($"isGrounded,{velocity}");
         }
     }
 
@@ -110,7 +117,7 @@ public class Character : MonoBehaviour, IControllable
         if (_direction != Vector3.zero)
         {
             _isMove = true;
-            _characterController.Move(_direction * _speed * Time.deltaTime);
+            _characterController.Move(new Vector3(_direction.x, 0, _direction.z) * _speed * Time.deltaTime);
         }
         else
         {
@@ -133,5 +140,15 @@ public class Character : MonoBehaviour, IControllable
     public bool IsMove()
     {
         return _isMove;
+    }
+
+    public void Jump()
+    {
+        if (_characterController.isGrounded)
+        {
+            velocity = _jumpHeight;
+            print(velocity + " jumped");
+        }
+       
     }
 }

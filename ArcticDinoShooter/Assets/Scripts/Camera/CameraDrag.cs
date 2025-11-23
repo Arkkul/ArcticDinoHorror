@@ -14,7 +14,7 @@ public class CameraDrag : MonoBehaviour
     private void Start()
     {
         controllable = GetComponentInParent<IControllable>();
-        print(transform.position);
+       // print(transform.position);
         _originalCameraPosition = transform.localPosition;
         
     }

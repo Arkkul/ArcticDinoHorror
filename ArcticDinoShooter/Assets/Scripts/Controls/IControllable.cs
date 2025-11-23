@@ -9,4 +9,5 @@ public interface IControllable
     public void Interact();
     public void Look();
     public bool IsMove();
+    public void Jump();
 }
