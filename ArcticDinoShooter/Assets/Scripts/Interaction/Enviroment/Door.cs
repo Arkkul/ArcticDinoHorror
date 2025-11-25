@@ -69,7 +69,7 @@ public class Door : MonoBehaviour, Iinteractable
 
     public string GetInteractionHint()
     {
-        return _closedOnKey ? "закрыто на ключ" : _closed? "нажмите Е, чтобы открыть": "нажмите Е, чтобы закрыть";
+        return _closedOnKey ? "закрыто на ключ" : _closed? "нажмите F, чтобы открыть": "нажмите F, чтобы закрыть";
     }
 
     public void Interact()

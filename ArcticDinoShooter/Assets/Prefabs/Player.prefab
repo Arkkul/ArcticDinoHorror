@@ -184,7 +184,7 @@ MonoBehaviour:
   _energyToRun: 12
   _crouchHeight: 1
   _crouchTime: 0.5
-  _jumpHeight: 5
+  _jumpHeight: 1.7
 --- !u!114 &495063969410986861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,7 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerCamera: {fileID: 2926133887442682982}
-  _interactDistance: 5
+  _interactDistance: 3
   interactText: {fileID: 0}
   _layerMask:
     serializedVersion: 2
