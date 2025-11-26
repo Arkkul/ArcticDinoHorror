@@ -20,27 +20,42 @@ public class TurretController : MonoBehaviour
     private float _timeTillNextShot;
     private GameObject _activeTarget;
 
+    [SerializeField]private bool _isFollowing = false;
+
     void Start()
     {
         _timeTillNextShot = _fireRate;
+        _targets.Add(GameObject.FindGameObjectWithTag("Player"));
+    }
+
+    public void StartFollow()
+    {
+        _isFollowing = true;
+    }
+
+    public void StopFollow()
+    {
+        _isFollowing = false;
     }
 
     void Update()
     {
-        //Get next target and rotate towards it
-        LookAtTarget();
+        if (_isFollowing)
+        {
+            LookAtTarget();
 
-        if (_timeTillNextShot <= 0)
-        {
-            _timeTillNextShot = _fireRate;
-            if (_activeTarget != null)
+            if (_timeTillNextShot <= 0)
             {
-                Shoot();
+                _timeTillNextShot = _fireRate;
+                if (_activeTarget != null)
+                {
+                    Shoot();
+                }
             }
-        }
-        else
-        {
-            _timeTillNextShot -= Time.deltaTime;
+            else
+            {
+                _timeTillNextShot -= Time.deltaTime;
+            }
         }
     }
 
@@ -49,7 +64,7 @@ public class TurretController : MonoBehaviour
         if (_targets.Count > 0)
         {
             GameObject target = _targets[0];
-            _targets.Remove(target);
+          //  _targets.Remove(target);
             return target;
         }
 
@@ -73,27 +88,27 @@ public class TurretController : MonoBehaviour
         //Get the direction
         Vector3 direction = _activeTarget.transform.position - _turretPivot.position;
         //Get the look rotation
-        Quaternion lookRoation = Quaternion.LookRotation(direction);
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
 
-        //Get the smoothed look rotation
-        Vector3 targetRotation = Quaternion.Slerp(_turretPivot.rotation, lookRoation, _rotationSpeed * Time.deltaTime).eulerAngles;
-        //rotate the pivot object only on the y axis
-        _turretPivot.rotation = Quaternion.Euler(Vector3.Scale(targetRotation, transform.up));
+        //Smoothly rotate towards the target using all axes
+        _turretPivot.rotation = Quaternion.Slerp(_turretPivot.rotation, lookRotation, _rotationSpeed * Time.deltaTime);
     }
 
     private void Shoot()
     {
-        _shootEffect.Play();
+       // Debug.Log("shoot");
+       // _shootEffect.Play();
 
         Ray shootRay = new Ray(_firePoint.position, _firePoint.forward);
 
         if (Physics.Raycast(shootRay, out RaycastHit hitInfo, _maxShootDistance))
         {
             PlayerHealth health = hitInfo.transform.gameObject.GetComponent<PlayerHealth>();
-
+            //Debug.Log(hitInfo.transform.gameObject.name);
             if (health == null)
             {
-                Debug.LogWarning("We hit something that doesn't have health.........");
+                Debug.LogWarning("We hit something that doesn't have health........."  );
+
             }
             else
             {

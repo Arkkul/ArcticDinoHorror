@@ -9,6 +9,7 @@ public class ShootingWeapon : MonoBehaviour, Iusable
     [SerializeField] private int _damage;
     [SerializeField] private AudioSource _shootSound;
     [SerializeField] private AudioSource _reloadSound;
+    [SerializeField] private LayerMask _layerMask;
 
     private Camera _playerCamera;
     private Controls _input;
@@ -62,11 +63,17 @@ public class ShootingWeapon : MonoBehaviour, Iusable
 
         Ray ray = _playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, _shootDistance))
+        RaycastHit otherHit;
+        if (Physics.Raycast(ray, out otherHit, _shootDistance))
         {
-            if (hit.collider == hit.collider)
+            print(otherHit.collider.gameObject.name);
+            if (Physics.Raycast(ray, out hit, _shootDistance, _layerMask))
             {
-                hit.transform.gameObject.GetComponent<IHealth>().TakeDamage(_damage);
+                if (hit.collider == otherHit.collider)
+                {
+                    print(hit.collider.gameObject.name);
+                    hit.transform.gameObject.GetComponent<IHealth>().TakeDamage(_damage);
+                }
             }
         }
     }

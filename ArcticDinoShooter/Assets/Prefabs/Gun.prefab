@@ -143,13 +143,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06a2d84169b2c44da74c95ad151d6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShootingWeapon
-  _shootDistance: 7
+  _shootDistance: 20
   _numberOfAmmo: 15
   _loadedAmmo: 7
   _magazineCapacity: 7
   _damage: 10
   _shootSound: {fileID: 2977222375703063025}
   _reloadSound: {fileID: 2977222375703063025}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 196608
 --- !u!54 &4075010114175757626
 Rigidbody:
   m_ObjectHideFlags: 0
